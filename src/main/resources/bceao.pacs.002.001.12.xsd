@@ -1,0 +1,421 @@
+<xs:schema xmlns="https://pisfn-docs.bceao.int/xsd/bceao.pacs.002.001.12"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    elementFormDefault="qualified" targetNamespace="https://pisfn-docs.bceao.int/xsd/bceao.pacs.002.001.12">
+    <xs:element name="Document" type="Document"/>
+
+    <xs:complexType name="Document">
+        <xs:sequence>
+            <xs:element name="FIToFIPmtStsRpt" type="FIToFIPaymentStatusReportV12"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FIToFIPaymentStatusReportV12">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">FIToFIPaymentStatusReportV12</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Scope&#13;
+			- Message envoyé par un participant PAYE pour répondre à une demande reçu via le système interopérable.
+			- Message envoyé par le système interopérable aux participants PAYEUR et PAYE pour leur notifier une réponse suite à un traitement
+			(Réponse positive ou négative).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="GrpHdr" type="GroupHeader101">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">GroupHeader</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Un ensemble d’information concernant toutes les contreparties de la transactions.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TxInfAndSts" type="PaymentTransaction130">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">TransactionInformationAndStatus</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Information de reponse de la transaction et statut.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GroupHeader101">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">GroupHeader101</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Un ensemble d’information concernant toutes les contreparties de la transactions.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="MsgId" type="Max30Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">MessageIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Identifiant point à point unique du message.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CreDtTm" type="ISODateTime">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">CreationDateTime</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Date et heure de création du mesage.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InstgAgt" type="BranchAndFinancialInstitutionIdentification6">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">InstructingAgent</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Agent qui envoie la reponse à la demande, en fournissant le statut de la requête.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InstdAgt" type="BranchAndFinancialInstitutionIdentification6">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">InstructedAgent</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Le participant qui reçoit la réponse à la demande.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="Max140Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max140Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Un chaine ayant 140 caractères maximum</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="140"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Max105Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max105Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Un chaine ayant 105 caractères maximum</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="105"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Max35Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max35Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Un chaine ayant 35 caractères maximum.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Max30Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max30Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Un chaine ayant 30 caractères maximum.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="EndToEnd35Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">EndToEnd35Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Un chaine ayant 35 caractères maximum.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="30"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MsgId30Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">MsgId30Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Un chaine ayant 35 caractères maximum.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="30"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="ISODateTime">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ISODateTime</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Date qui peut être soit de format UTC (YYYY-MM-DDThh:mm:ss.sssZ), soit au format d'heure local avec décalage UTC(YYYY-MM-DDThh:mm:ss.sss+/-hh:mm), soit au format d'heure local (YYYY-MM-DDThh:mm:ss.sss).
+			Note sur le format de l'heure:
+			1) Début / Fin 
+			00:00:00 = Début de journée
+			24:00:00 = Fin de journée
+			2)  Fractions de seconde dans le format horaire :Des fractions décimales de secondes peuvent être incluses.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="ISODate">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ISODate</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Date ayant le format YYYY-MM-DD format.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+
+    <xs:complexType name="BranchAndFinancialInstitutionIdentification6">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">BranchAndFinancialInstitutionIdentification6</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Information concernant une institution finnchière ou un guichet.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="FinInstnId" type="FinancialInstitutionIdentification18 ">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">FinancialInstitutionIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN"> Identification de l'institution.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="BrnchId" type="BranchData3">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">BranchIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Information du guichet de l'institution.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="FinancialInstitutionIdentification18">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">FinancialInstitutionIdentification18</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Identification de l'institution.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Nm" type="Max140Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Name</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Nom de l'institution.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Othr" type="GenericFinancialIdentification1">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Other</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Identifiant unique de l'institution dans la plateforme ISFN.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="GenericFinancialIdentification1">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">GenericFinancialIdentification1</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Identifiant unique de l'institution dans la plateforme ISFN.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Identifiant unique de l'institution dans la plateforme ISFN.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="BranchData3">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">BranchData3</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Information du guichet de l'institution.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="1" minOccurs="0" name="Id" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Identifiant du guichet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Nm" type="Max140Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Name</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Nom du guichet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="PaymentTransaction130">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">PaymentTransaction130</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Information de reponse de la transaction et statut.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="StsId" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">StatusIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Reference de reponse de la transaction (identifiant interne au message).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrgnlGrpInf" type="OriginalGroupInformation29">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">OriginalGroupInformation</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Information sur le message initialement envoyé.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="OrgnlInstrId" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">OriginalInstructionIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Identifiant d'une transaction dans le cas d'un bulk payment.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrgnlEndToEndId" type="EndToEnd35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">OriginalEndToEndIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Identification de la transaction end-to-end (numéro généré par le système du membre).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrgnlTxId" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">OriginalTransactionIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Référence interne au participant pour la transaction à des fins de réconciliation notamment.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="TxSts" type="ExternalPaymentTransactionStatus1Code">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">TransactionStatus</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Information détaillée sur la raison du statut (Ce champ contient le motif ou la justification de la réponse accordée au traitement de la transaction).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="StsRsnInf" type="StatusReasonInformation12">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">StatusReasonInformation</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Information détaillée sur la raison du statut (Ce champ contient le motif ou la justification de la réponse accordée au traitement de la transaction).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AccptncDtTm" type="ISODateTime">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">AcceptanceDateTime</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Date acceptation du paiement par le participant payé.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="FctvIntrBkSttlmDt" type="DateAndDateTime2Choice">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">EffectiveInterbankSettlementDate</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Date d'irrévocabilité spécifiée par l'ISFN.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OriginalGroupInformation29">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">OriginalGroupInformation29</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Information sur le message initialement envoyé.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="OrgnlMsgId" type="MsgId30Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">OriginalMessageIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Reference du message initial.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrgnlMsgNmId" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">OriginalMessageNameIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Message ISO initial envoyé par exemple, pacs.008.001.10 ou pacs.028.001.05, etc.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="OrgnlCreDtTm" type="ISODateTime">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">OriginalCreationDateTime</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Date de céréation initial du message</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="ExternalPaymentTransactionStatus1Code">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ExternalPaymentTransactionStatus1Code</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Statut de la transaction (Ce champs contient la réponse relativement au traitement de la transaction).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="DateAndDateTime2Choice">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">DateAndDateTime2Choice</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Choix entre 2 format : date ou dateTime.</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="Dt" type="ISODate">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Date</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Format date.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DtTm" type="ISODateTime">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">DateTime</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Format DateTime.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+
+    <xs:complexType name="StatusReasonInformation12">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">StatusReasonInformation12</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Information détaillée sur la raison du statut (Ce champ contient le motif ou la justification de la réponse accordée au traitement de la transaction).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+
+            <xs:element maxOccurs="1" minOccurs="0" name="Rsn" type="StatusReason6Choice">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Reason</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Motif de la réponse.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="AddtlInf" type="Max105Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">AdditionalInformation</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Information additionnelle sur le motif du rejet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StatusReason6Choice">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">StatusReason6Choice</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Choix entre un code ISO 20022 ou un code ISO propriétaire défini par l'ISFN.</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="Cd" type="ExternalStatusReason1Code">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Code</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Code de la raison (Code des justificatifs de réponse à une demande - codifié par ISO).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Prtry" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Proprietary</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="EN">Code propriétaire ISO spécifié par l'ISFN .</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:simpleType name="ExternalStatusReason1Code">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ExternalStatusReason1Code</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Spécifie le staut de la raison tel que définie dans une liste de code donnée par la norme ISO 20022.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
