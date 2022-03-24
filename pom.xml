@@ -26,12 +26,18 @@
     </dependency>
   </dependencies>
 
+  <!--mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=iso20022-messages -Dsonar.login=8b6631f82ebc764cae489194d8386691db592b71 -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=kdiBrightness-->
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.9.0</version>
+      </plugin>
+      <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
         <artifactId>sonar-maven-plugin</artifactId>
-        <version>3.2</version>
+        <version>3.6.0.1398</version>
         <executions>
           <execution>
             <phase>verify</phase>
