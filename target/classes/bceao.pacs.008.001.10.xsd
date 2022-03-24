@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="https://pisfn-docs.bceao.int/xsd/bceao.pacs.008.001.10" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="https://pisfn-docs.bceao.int/xsd/bceao.pacs.008.001.10">
+    <xs:element name="Document" type="Document"/>
+    <xs:complexType name="AccountIdentification4Choice">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">AccountIdentification4Choice</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie l'identification unique d'un compte assigné par le gestionnaire.</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="IBAN" type="IBAN2007Identifier">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">IBAN</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">International Bank Account Number (IBAN) - identifiant utilisé a l'échelle mondiale par les institutions financiéres pour identifier de maniére unique le compte d'un client.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Othr" type="GenericAccountIdentification1">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Other</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique d'un compte assigné par le gestionnaire en utilisant un schéma d'identification.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:simpleType name="ActiveCurrencyAndAmount_SimpleType">
+        <xs:restriction base="xs:decimal">
+            <xs:fractionDigits value="5"/>
+            <xs:totalDigits value="18"/>
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ActiveCurrencyAndAmount">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ActiveCurrencyAndAmount</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Un nombre d'unités monétaires spécifiées dans une devise active où l'unité de devise est explicite et conforme à la norme ISO 4217.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="ActiveCurrencyAndAmount_SimpleType">
+                <xs:attribute name="Ccy" type="ActiveCurrencyCode" use="required">
+                    <xs:annotation>
+                        <xs:documentation source="Name" xml:lang="EN">Currency</xs:documentation>
+                        <xs:documentation source="Definition" xml:lang="FR">Moyen d'échange de valeur.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ActiveCurrencyCode">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ActiveCurrencyCode</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Un code attribué à une devise par une agence de maintenance dans le cadre d'un schéma d'identification international tel que décrit dans la dernière édition de la norme internationale ISO 4217 "Codes pour la représentation des devises et des fonds".</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{3,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="Document">
+        <xs:sequence>
+            <xs:element name="FIToFICstmrCdtTrf" type="FIToFICustomerCreditTransferV10"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FIToFICustomerCreditTransferV10">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">FIToFICustomerCreditTransferV10</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR"></xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="GrpHdr" type="GroupHeader96">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">GroupHeader</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Ensemble de caractéristiques partagées par toutes les transactions individuelles incluses dans le message.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CdtTrfTxInf" type="CreditTransferTransaction50">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">CreditTransferTransactionInformation</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Ensemble d'éléments fournissant des informations spécifiques au(x) virement(s) individuel(s).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GroupHeader96">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">GroupHeader96</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Ensemble de caractéristiques partagées par toutes les transactions individuelles incluses dans le message.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="MsgId" type="MsgId30Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">MessageIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR"></xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CreDtTm" type="ISODateTime">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">CreationDateTime</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Date et heure de création du message</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NbOfTxs" type="Max15NumericText">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">NumberOfTransactions</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Nombre de transactions individuelles contenues dans le message.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TtlIntrBkSttlmAmt" type="ActiveCurrencyAndAmount">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">TotalInterbankSettlementAmount</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Montant total d'argent transféré entre l'agent donneur d'ordre et l'agent mandaté.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SttlmInf" type="SettlementInstruction11">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">SettlementInformation</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Spécifie les détails sur la façon dont le règlement de la ou des transactions entre l'agent donneur d'ordre et l'agent mandaté est effectué.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CreditTransferTransaction50">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">CreditTransferTransaction50</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Fournit des détails supplémentaires spécifiques à la ou aux transactions individuelles incluses dans le message.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="PmtId" type="PaymentIdentification13">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">PaymentIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Ensemble d'éléments utilisés pour référencer une instruction de paiement.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="IntrBkSttlmAmt" type="ActiveCurrencyAndAmount">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">InterbankSettlementAmount</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Montant d'argent transféré entre l'agent d'instruction et l'agent mandaté.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SttlmTmReq" type="SettlementTimeRequest2">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">SettlementTimeRequest</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Fournit des informations sur le(s) délai(s) de règlement demandé(s) de l'instruction de paiement.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ChrgBr" type="ChargeBearerType1Code">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">ChargeBearer</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Spécifie quelle(s) partie(s) supporteront les frais associés au traitement de la transaction de paiement.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Dbtr" type="PartyIdentification135">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Debtor</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Partie qui doit une somme d'argent au créancier (ultime).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DbtrAcct" type="CashAccount40">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">DebtorAccount</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification univoque du compte du débiteur sur lequel une écriture de débit sera effectuée à la suite de la transaction.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DbtrAgt" type="BranchAndFinancialInstitutionIdentification6">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">DebtorAgent</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Institution financière qui gère un compte pour le débiteur.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CdtrAgt" type="BranchAndFinancialInstitutionIdentification6">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">CreditorAgent</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Institution financière qui gère un compte pour le créancier.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Cdtr" type="PartyIdentification135">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Creditor</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Partie à laquelle une somme d'argent est due.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CdtrAcct" type="CashAccount40">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">CreditorAccount</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification univoque du compte du créancier sur lequel une écriture au crédit sera enregistrée à la suite de l'opération de paiement.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BranchAndFinancialInstitutionIdentification6">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">BranchAndFinancialInstitutionIdentification6</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Identification unique et sans ambiguïté d'une institution financière ou d'une succursale d'une institution financière.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="FinInstnId" type="FinancialInstitutionIdentification18">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">FinancialInstitutionIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique et sans ambiguïté d'une institution financière, telle qu'attribuée dans le cadre d'un système d'identification reconnu ou exclusif à l'échelle internationale.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BrnchId" type="BranchData3">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">BranchIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identifie une succursale spécifique d'une institution financière.Utilisation : Ce composant doit être utilisé dans le cas où les informations d'identification dans le composant de l'institution financière ne fournissent pas d'identification jusqu'au niveau de la succursale.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FinancialInstitutionIdentification18">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">FinancialInstitutionIdentification18</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie les détails permettant d'identifier une institution financière.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Nm" type="Max140Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Name</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Nom par lequel une institution financière est connue et qui est généralement utilisé pour identifier cet agent.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Othr" type="GenericFinancialIdentification1">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Other</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique d'un agent, telle qu'assignée par une institution, à l'aide d'un système d'identification.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BranchData3">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">BranchData3</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Informations qui localisent et identifient une succursale spécifique d'une institution financière.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique et sans ambiguïté d'une succursale d'une institution financière.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Nm" type="Max140Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Name</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Nom par lequel une institution financière est connue et qui est généralement utilisée pour l'identifier.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GenericFinancialIdentification1">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">GenericFinancialIdentification1</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Informations relatives à l'identification d'une institution financière.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique et sans ambiguïté d'une personne.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="Max35Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max35Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie une chaîne de caractères d'une longueur maximale de 35 caractères.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+     <xs:simpleType name="IBAN2007Identifier">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">IBAN2007Identifier</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Identifiant utilisé au niveau international par les institutions financières pour identifier de manière unique le compte d'un client auprès d'une institution financière, tel que décrit dans la dernière édition de la norme internationale ISO 13616:2007 - "Services bancaires et financiers connexes - Numéro de compte bancaire international (IBAN)" .</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ISODateTime">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ISODateTime</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Un point particulier de la progression du temps défini par une date obligatoire et une composante temporelle obligatoire</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime"/>
+    </xs:simpleType>
+    <xs:simpleType name="Max15NumericText">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max15NumericText</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie une chaîne numérique d'une longueur maximale de 15 chiffres.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{1,15}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="SettlementInstruction11">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">SettlementInstruction11</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Fournit plus de détails sur le règlement de l'instruction.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="SttlmMtd" type="SettlementMethod1Code">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">SettlementMethod</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Méthode utilisée pour régler le (lot d') instructions de paiement.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="SettlementMethod1Code">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">SettlementMethod1Code</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie la méthode utilisée pour régler l'instruction de virement.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CLRG">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">ClearingSystem</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Le règlement est effectué par le biais d'un système de compensation des paiements.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="PaymentIdentification13">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">PaymentIdentification13</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="EN">Fournit d'autres moyens de référencer une transaction de paiement.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="InstrId" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">InstructionIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique, telle qu'attribuée par une partie ordonnatrice à une partie instruite, pour identifier sans ambiguïté l'instruction.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="EndToEndId" type="EndToEnd35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">EndToEndIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique, attribuée par la partie initiatrice, pour identifier sans ambiguïté la transaction. Cette identification est transmise, sans modification, tout au long de la chaîne de bout en bout.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TxId" type="Max35Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">TransactionIdentification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique, attribuée par le premier donneur d'ordre, pour identifier sans ambiguïté l'opération qui se répercute, telle quelle, sur l'ensemble de la chaîne interbancaire.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SettlementTimeRequest2">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">SettlementTimeRequest2</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Fournit des informations sur le(s) délai(s) de règlement demandé(s) de l'instruction de paiement.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="RjctTm" type="ISOTime">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">RejectTime</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Délai avant lequel le paiement doit être réglé pour éviter le rejet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="ChargeBearerType1Code">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ChargeBearerType1Code</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie la ou les parties qui paieront les frais dus pour le traitement de l'instruction.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SLEV">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">FollowingServiceLevel</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Les frais doivent être appliqués selon les règles convenues dans le niveau de service et/ou le programme.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="PartyIdentification135">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">PartyIdentification135</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie l'identification d'une personne ou d'une organisation.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Nm" type="Max140Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Name</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Nom par lequel une partie est connue et qui est généralement utilisé pour identifier cette partie.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CtryOfRes" type="CountryCode">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">CountryOfResidence</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Pays dans lequel une personne réside (lieu de résidence d'une personne). Dans le cas d'une société, il s'agit du pays à partir duquel les affaires de cette société sont dirigées.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="Max140Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max140Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie une chaîne de caractères d'une longueur maximale de 140 caractères.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="140"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CountryCode">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">CountryCode</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Code permettant d'identifier un pays, une dépendance ou une autre zone d'intérêt géopolitique particulier, sur la base des noms de pays obtenus auprès des Nations Unies (ISO 3166, code Alpha-2).</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{2,2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ISOTime">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ISOTime</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Un point particulier de la progression du temps dans un jour calendaire</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:time"/>
+    </xs:simpleType>
+    <xs:complexType name="CashAccount40">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">CashAccount40</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Fournit les détails permettant d'identifier un compte.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="AccountIdentification4Choice">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification unique et sans ambiguïté du compte entre le titulaire du compte et le gestionnaire du compte.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Tp" type="CashAccountType2Choice">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Type</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Spécifie la nature ou l'utilisation du compte.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Ccy" type="ActiveOrHistoricCurrencyCode">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Currency</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Moyen d'échange de valeur.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element maxOccurs="1" minOccurs="0" name="Prxy" type="ProxyAccountIdentification1">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Proxy</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Spécifie un autre nom d'emprunt pour l'identification du compte.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ProxyAccountIdentification1">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ProxyAccountIdentification1</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Informations relatives à une identification proxy du compte.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Tp" type="ProxyAccountType1Choice">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Type</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Type d'identification du proxy.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Id" type="Max2048Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification utilisée pour indiquer l'identification du compte sous un autre nom spécifié.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="Max2048Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max2048Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie une chaîne de caractères d'une longueur maximale de 2048 caractères.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="2048"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ProxyAccountType1Choice">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ProxyAccountType1Choice</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie le schéma utilisé pour l'identification d'un alias de compte.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Cd" type="ExternalProxyAccountType1Code">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Code</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Nom du schéma d'identification, sous forme codée tel que publié dans une liste externe.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="ExternalProxyAccountType1Code">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ExternalProxyAccountType1Code</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie le code de type de compte proxy externe</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ActiveOrHistoricCurrencyCode">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ActiveOrHistoricCurrencyCode</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Code attribué à une devise par une agence de maintenance dans le cadre d'un schéma d'identification international, tel que décrit dans la dernière édition de la norme internationale ISO 4217 "Codes pour la représentation des devises et des fonds".</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{3,3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="CashAccountType2Choice">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">CashAccountType2Choice</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Nature ou utilisation du compte.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Cd" type="ExternalCashAccountType1Code">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Code</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Type de compte, sous forme codée.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="ExternalCashAccountType1Code">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">ExternalCashAccountType1Code</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Précise la nature, ou l'utilisation, du compte de trésorerie sous la forme d'une chaîne de caractères d'une longueur maximale de 4 caractères.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="GenericAccountIdentification1">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">GenericAccountIdentification1</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Informations relatives à une identification de compte générique.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="Max34Text">
+                <xs:annotation>
+                    <xs:documentation source="Name" xml:lang="EN">Identification</xs:documentation>
+                    <xs:documentation source="Definition" xml:lang="FR">Identification attribuée par une institution.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="Max34Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">Max34Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie une chaîne de caractères d'une longueur maximale de 34 caractères.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="34"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MsgId30Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">MsgId30Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie une chaîne de caractères d'une longueur de 30 caractères.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+     <xs:simpleType name="EndToEnd35Text">
+        <xs:annotation>
+            <xs:documentation source="Name" xml:lang="EN">EndToEnd35Text</xs:documentation>
+            <xs:documentation source="Definition" xml:lang="FR">Spécifie une chaîne de caractères d'une longueur de 35 caractères.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
